@@ -23,7 +23,6 @@ friend int compare (BigInteger ab,BigInteger bb);
     friend std::string toString (BigInteger right);
     BigInteger& operator+=(BigInteger const& right);
     BigInteger& operator=(BigInteger const& right);
-    BigInteger& operator-(BigInteger const& right);
     BigInteger& operator-=(BigInteger const& right);
     BigInteger& operator*=(BigInteger const& right);
     BigInteger& operator*(BigInteger const& right);
@@ -34,6 +33,7 @@ private:
 };
 
 BigInteger operator+(BigInteger left,BigInteger const& right);
+BigInteger operator-(BigInteger left,BigInteger const& right);
 std::ostream& operator<<(std::ostream& so, const BigInteger& consst);
 std::istream& operator>>(std::istream& so, BigInteger& consst);
 std::string to_string (int);

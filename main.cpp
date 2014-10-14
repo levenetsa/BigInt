@@ -6,7 +6,7 @@ int main()
     BigInteger b,c;
     std::cin>>c>>b;
 
-    b*=c;
+    b=b-c;
 
     std::cout << b ;
     return 0;

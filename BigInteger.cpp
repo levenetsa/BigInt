@@ -68,10 +68,10 @@ std::ostream& operator<<(std::ostream& so, const BigInteger& consst)
 std::istream& operator>>(std::istream& so, BigInteger& consst)
 {
     std::string str;
- so>>str;
- consst =  BigInteger(str);
+    so>>str;
+    consst =  BigInteger(str);
 
- return so;
+    return so;
 }
 
 
@@ -126,13 +126,18 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
     int adding=0;
     int addingN;
     int size = std::max(a.size(),first.a.size());
-    if (a.size()<first.a.size()){
+    if (a.size()<first.a.size())
+    {
         for (int i=0; i<=size-a.size()+1; i++)
-        a.push_back(0);}else{
-            if (a.size()!=first.a.size())
-    for (int i=0; i<=size-first.a.size()+1; i++)
-        first.a.push_back(0);}
-        std::cout <<toString(*this)<<" "<<toString(right)<<std::endl;
+            a.push_back(0);
+    }
+    else
+    {
+        if (a.size()!=first.a.size())
+            for (int i=0; i<=size-first.a.size()+1; i++)
+                first.a.push_back(0);
+    }
+
     if (first.sign && sign||!first.sign && !sign)
     {
         for (int i=0; i<size; i++)
@@ -232,6 +237,9 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
         }
 
     }
+    while(a.size()!=1&&a.back()==0)
+        a.pop_back();
+
 }
 
 int compare (BigInteger ab,BigInteger bb)
@@ -259,9 +267,7 @@ BigInteger operator+(BigInteger l,BigInteger const& right)
 BigInteger operator-(BigInteger l,BigInteger const& right)
 {
     BigInteger b(l);
-    BigInteger c(right);
-    c.sign=!c.sign;
-    b+=c;
+    b-=right;
     return b ;
 }
 
@@ -300,18 +306,20 @@ BigInteger& BigInteger::operator*=(BigInteger const& right)
             buffer=buffer/10000;
             c.a[ix + jx] += adding;
             int z=ix+jx;
-            while (z<length&&c.a[z]>=10000){
+            while (z<length&&c.a[z]>=10000)
+            {
                 c.a[z+1]=c.a[z]/10000;
                 c.a[z]%=10000;
             }
             c.a[ix+jx+1]+=buffer;
             z=ix+jx+1;
-            while (z<length&&c.a[z]>=10000){
+            while (z<length&&c.a[z]>=10000)
+            {
                 c.a[z+1]=c.a[z]/10000;
                 c.a[z]%=10000;
             }
         }
-    while(c.a.back()==0)
+    while(c.a.size()!=1&&c.a.back()==0)
         c.a.pop_back();
     *this=c;
 }
