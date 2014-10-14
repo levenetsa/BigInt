@@ -8,8 +8,7 @@
 
 class BigInteger
 {
-    //std::vector<int> a;
-    //bool sign;
+
 
 public:
 
@@ -39,4 +38,4 @@ std::ostream& operator<<(std::ostream& so, const BigInteger& consst);
 std::istream& operator>>(std::istream& so, BigInteger& consst);
 std::string to_string (int);
 int get_amz (int);
-#endif // BIG_INTEGER_H
+#endif
