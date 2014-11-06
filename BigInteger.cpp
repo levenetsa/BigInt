@@ -1,5 +1,5 @@
 #include "BigInteger.h"
-
+#include <exception>
 #include <stdlib.h>
 
 
@@ -24,6 +24,7 @@ BigInteger::BigInteger (int t)
 
 BigInteger::BigInteger (std::string const& st)
 {
+//string constructor
     std::string str="";
     str+=st;
     if (str[0]!='-')
@@ -36,6 +37,18 @@ BigInteger::BigInteger (std::string const& st)
         str=str.substr(1,str.length()-1);
 
     }
+try{
+    //incorrect input possible there
+    for (int i=0;i<st.length() ;i++ )
+        if (!isdigit(st[i]))
+                throw "incorrect input";}
+                catch(...){
+        std::cout << "incorrect input"<<std::endl;
+        return ;
+    }
+
+
+
     int t;
     while(str.length()>3)
     {
@@ -45,9 +58,11 @@ BigInteger::BigInteger (std::string const& st)
     }
     if (str.length()>0)
     {
+
         t=atoi(str.c_str());
         a.push_back(t);
     }
+
 }
 
 
@@ -61,15 +76,18 @@ BigInteger::BigInteger(BigInteger const& right)
 
 std::ostream& operator<<(std::ostream& so, const BigInteger& consst)
 {
+    //out
     so<<toString(consst);
     return so;
 }
 
 std::istream& operator>>(std::istream& so, BigInteger& consst)
 {
+    //in
     std::string str;
     so>>str;
     consst =  BigInteger(str);
+    // constructor from string can throw incorrect input
 
     return so;
 }
@@ -77,6 +95,7 @@ std::istream& operator>>(std::istream& so, BigInteger& consst)
 
 std::string toString (BigInteger right)
 {
+    //reducting to string
     std::string current(""),ghj;
     if (!right.sign) current += "-";
     BigInteger d;
@@ -98,6 +117,7 @@ std::string toString (BigInteger right)
 }
 int get_amz (int t)
 {
+    //get an amount of zeros in block
     if (t<10) return 3;
     if (t<100) return 2;
     if (t<1000) return 1;
@@ -107,6 +127,7 @@ int get_amz (int t)
 
 std::string to_string (int t)
 {
+    //reducting block to string
     std::string out;
     if (t==0) return "0";
     while(t!=0)
@@ -126,6 +147,7 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
     int adding=0;
     int addingN;
     int size = std::max(a.size(),first.a.size());
+    //additiont to one length
     if (a.size()<first.a.size())
     {
         for (int i=0; i<=size-a.size()+1; i++)
@@ -137,7 +159,7 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
             for (int i=0; i<=size-first.a.size()+1; i++)
                 first.a.push_back(0);
     }
-
+// sum cases + & +, - & +, + & -, - & -
     if (first.sign && sign||!first.sign && !sign)
     {
         for (int i=0; i<size; i++)
@@ -244,6 +266,7 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
 
 int compare (BigInteger ab,BigInteger bb)
 {
+    //compare by abs
     int size = std::max(ab.a.size(),bb.a.size());
     for (int i=0; i<size-ab.a.size(); i++)
         ab.a.push_back(0);
@@ -292,6 +315,7 @@ BigInteger& BigInteger::operator-=(BigInteger const& right)
 
 BigInteger& BigInteger::operator*=(BigInteger const& right)
 {
+    //multiplication
     BigInteger c;
     c.sign=(sign==right.sign);
     int length=a.size()+right.a.size()+1;

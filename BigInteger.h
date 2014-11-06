@@ -12,12 +12,9 @@ class BigInteger
 
 public:
 
-std::vector<int> a;
-    bool sign;
-
-friend int compare (BigInteger ab,BigInteger bb);
     BigInteger ();
     BigInteger (int);
+    //copy constructor
     BigInteger(BigInteger const& right);
     BigInteger (std::string const& st);
     friend std::string toString (BigInteger right);
@@ -28,7 +25,9 @@ friend int compare (BigInteger ab,BigInteger bb);
     BigInteger& operator*(BigInteger const& right);
 
 private:
-
+    std::vector<int> a;
+    bool sign;
+    friend int compare (BigInteger ab,BigInteger bb);
 
 };
 
