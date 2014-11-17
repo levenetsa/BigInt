@@ -39,7 +39,7 @@ BigInteger::BigInteger (std::string const& st)
     }
 try{
     //incorrect input possible there
-    for (int i=0;i<st.length() ;i++ )
+    for (unsigned int i=0;i<st.length() ;i++ )
         if (!isdigit(st[i]))
                 throw "incorrect input";}
                 catch(...){
@@ -69,7 +69,7 @@ try{
 
 BigInteger::BigInteger(BigInteger const& right)
 {
-    for (int i=0; i<right.a.size(); i++)
+    for (unsigned int i=0; i<right.a.size(); i++)
         a.push_back(right.a[i]);
     sign = right.sign;
 }
@@ -150,19 +150,19 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
     //additiont to one length
     if (a.size()<first.a.size())
     {
-        for (int i=0; i<=size-a.size()+1; i++)
+        for (unsigned int i=0; i<=size-a.size()+1; i++)
             a.push_back(0);
     }
     else
     {
         if (a.size()!=first.a.size())
-            for (int i=0; i<=size-first.a.size()+1; i++)
+            for (unsigned int i=0; i<=size-first.a.size()+1; i++)
                 first.a.push_back(0);
     }
 // sum cases + & +, - & +, + & -, - & -
-    if (first.sign && sign||!first.sign && !sign)
+    if ((first.sign && sign) || (!first.sign && !sign))
     {
-        for (int i=0; i<size; i++)
+        for ( int i=0; i<size; i++)
         {
             check=first.a[i]+a[i]+adding;
             if (check > 9999)
@@ -261,6 +261,7 @@ BigInteger& BigInteger::operator+=(BigInteger const& right)
     }
     while(a.size()!=1&&a.back()==0)
         a.pop_back();
+        return *this;
 
 }
 
@@ -268,11 +269,11 @@ int compare (BigInteger ab,BigInteger bb)
 {
     //compare by abs
     int size = std::max(ab.a.size(),bb.a.size());
-    for (int i=0; i<size-ab.a.size(); i++)
+    for (unsigned int i=0; i<size-ab.a.size(); i++)
         ab.a.push_back(0);
-    for (int i=0; i<size-bb.a.size(); i++)
+    for (unsigned int i=0; i<size-bb.a.size(); i++)
         bb.a.push_back(0);
-    for (int i=size-1; i>=0; i--)
+    for (unsigned int i=size-1; i>=0; i--)
     {
         if (ab.a[i]>bb.a[i]) return 1;
         if (ab.a[i]<bb.a[i]) return -1;
@@ -297,10 +298,9 @@ BigInteger operator-(BigInteger l,BigInteger const& right)
 BigInteger& BigInteger::operator=(BigInteger const& right)
 {
     BigInteger b(right);
-
     a=b.a;
     sign=b.sign;
-    return b;
+    return *this;
 }
 
 
@@ -309,6 +309,7 @@ BigInteger& BigInteger::operator-=(BigInteger const& right)
     BigInteger m(right);
     m.sign= !m.sign;
     *this+=m;
+    return *this;
 }
 
 
@@ -322,8 +323,8 @@ BigInteger& BigInteger::operator*=(BigInteger const& right)
     int buffer,adding;
     for(int i=0; i<=length; i++)
         c.a.push_back(0);
-    for (int ix = 0; ix <a.size() ; ix++)
-        for (int jx = 0; jx < right.a.size(); jx++)
+    for (unsigned int ix = 0; ix <a.size() ; ix++)
+        for (unsigned int jx = 0; jx < right.a.size(); jx++)
         {
             buffer=a[ix] * right.a[jx];
             adding=buffer%10000;
@@ -346,6 +347,7 @@ BigInteger& BigInteger::operator*=(BigInteger const& right)
     while(c.a.size()!=1&&c.a.back()==0)
         c.a.pop_back();
     *this=c;
+    return *this;
 }
 BigInteger& BigInteger::operator*(BigInteger const& right)
 {

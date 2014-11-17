@@ -11,7 +11,6 @@ class BigInteger
 
 
 public:
-
     BigInteger ();
     BigInteger (int);
     //copy constructor
@@ -28,7 +27,6 @@ private:
     std::vector<int> a;
     bool sign;
     friend int compare (BigInteger ab,BigInteger bb);
-
 };
 
 BigInteger operator+(BigInteger left,BigInteger const& right);
